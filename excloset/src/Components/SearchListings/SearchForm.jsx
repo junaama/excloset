@@ -1,66 +1,15 @@
-import React, { useState,useRef } from "react";
-import apiURL from "../../apiConfig";
-import axios from "axios";
+import React from 'react';
 
-const userId = document.cookie.split(";")[1].split('=')[1];
+const SearchForm = () => {
+    const handleChange = (e)=> {
 
-const ListingForm = () => {
-
-  const [input, setInput] = useState({
-    image: null,
-    description: "",
-    age: "",
-    size: "",
-    style: ""
-  });
-  const form = useRef(null)
-
-  const handleChange = (e) => {
-    if (e.target.name === "image") {
-      setInput({ ...input, [e.target.name]: e.target.files[0] });
-    } else {
-      setInput({ ...input, [e.target.name]: e.target.value });
     }
-  };
-
-  const handleSubmit = async (e) => {
-    let listingId = ""
-    e.preventDefault();
-
-    const data = new FormData(form.current)
-    data.append('user', userId)
-    try {
-      const res = await axios.post(`${apiURL}/api/listings`, data)
-      
-     listingId = res.data.listingCreated._id
-      await axios.put(`${apiURL}/api/donoruser/${userId}/addListing/${listingId}`)
-    } catch (err) {
-      console.error(err);
+    const handleSubmit = (e)=> {
+        e.preventDefault();
     }
-  };
-
-  
-  return (
-    <>
-      <div>
-        <form onSubmit={handleSubmit} encType="multipart/form-data" id="listingForm" ref={form}>
-          <label htmlFor="image">Upload Image</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            onChange={handleChange}
-            required
-          />
-
-          <label htmlFor="description">Description</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            onChange={handleChange}
-          />
-          <br />
+    return (
+        <>
+         <form onSubmit={handleSubmit}>
 
           <label>Age</label>
 
@@ -154,16 +103,12 @@ const ListingForm = () => {
           <label htmlFor="fancy">Fancy</label>
           <br />
           <button
-            disabled={
-              !(input.age && input.size && input.style && input.description)
-            }
           >
-            Submit
+            Search
           </button>
         </form>
-      </div>
-    </>
-  );
-};
+        </>
+    )
+}
 
-export default ListingForm;
+export default SearchForm;

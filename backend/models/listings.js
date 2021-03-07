@@ -8,7 +8,14 @@ const listingSchema = new mongoose.Schema({
     "description": String, 
     "age": String,
     "size": String,
-    "style": String
+    "style": String,
+    user: 
+        {
+          ref: "User",
+          type: mongoose.Schema.Types.ObjectId,
+          required: true
+        },
+      
 })
 
 const Listings = mongoose.model("Listings", listingSchema)

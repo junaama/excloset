@@ -33,20 +33,27 @@ router.get('/', (req,res)=> {
     })
 
 })
+router.get('/:id', async(req,res)=>{
+    const listing = await Listing.findById(req.params.id);
+
+
+  res.json(listing)
+})
 
 router.post('/', upload.single('image'), async (req,res,next)=> {
 
 
     const url = req.protocol + "://" + req.get("host")
     console.log("URL:", url)
-    console.log("FILE: ", req.file)
+    console.log("FILE: ", req.body)
 
     const listing = new Listing({
         image: url + '/public/' + req.file.filename,
         description: req.body.description,
         age: req.body.age,
         size: req.body.size,
-        style: req.body.style
+        style: req.body.style,
+        user: req.body.user
     })
     listing.save().then(result=> {
         res.status(201).json({

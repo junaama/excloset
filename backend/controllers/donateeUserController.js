@@ -96,10 +96,7 @@ router.get("/:id", async (req, res) => {
   });
 });
 
-//delete your own account
-//only when you are logged in can u delete
-//use middleware to achieve this
-//put back auth when needed auth
+
 router.delete("/delete/:id", async (req, res) => {
   try {
     const deletedUser = await donateeUser.findByIdAndDelete(req.params.id);
@@ -129,50 +126,6 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
-//put task to schedule
-//delete task from schedule
-//update task in schedule
 
-router.put("/:userId/addTasks/:id", (req, res) => {
-  Task.findById(req.params.id, (err, task) => {
-    if (err) console.log(err);
-    else {
-      donateeUser.findByIdAndUpdate(
-        req.params.userId,
-        {
-          $push: {
-            schedule: task.id,
-          },
-        },
-        (err, model) => {
-          if (err) console.log(err);
-          else res.send(model);
-        }
-      );
-    }
-  });
-});
 
-router.put("/:userId/removeTask/:id", (req, res) => {
-  Task.findById(req.params.id, (err, task) => {
-    if (err) console.log(err);
-    else {
-      donateeUser.findByIdAndUpdate(
-        req.params.userId,
-        {
-          $pull: {
-            schedule: task.id,
-          },
-        },
-        (err, model) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(model);
-          }
-        }
-      );
-    }
-  });
-});
 module.exports = router;

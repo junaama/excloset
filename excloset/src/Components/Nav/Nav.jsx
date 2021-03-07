@@ -4,7 +4,6 @@ import UserContext from "../../Context/context";
 const Nav = () => {
 
   const { user, setUser } = useContext(UserContext);
-
     const logout = () => {
         setUser({
           token: undefined,
@@ -13,7 +12,6 @@ const Nav = () => {
         });
         localStorage.setItem("auth-token", "");
         document.cookie = "userId=";
-        console.log("in logout", document.cookie);
       };
       
       const changeTopic = () => {
@@ -39,6 +37,9 @@ const Nav = () => {
             </li>
             <li>
                 <a href="/">Profile</a>
+            </li>
+            <li>
+                <a href="/listingsctn">ListingCtn</a>
             </li>
             <li>
              {/* <button onClick={logout}>Logout</button> */}

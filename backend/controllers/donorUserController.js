@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const donorUser = require("../models/donorUser");
 const auth = require("../middlewares/auth");
-// const Task = require("../models/task");
+const Listing = require("../models/listings");
 require("dotenv").config();
 
 //register
@@ -91,15 +91,12 @@ router.get("/:id", async (req, res) => {
   res.json({
     username: user.username,
     id: user._id,
-    plans: user.plans,
-    verses: user.verses,
+    posts: user.posts,
+    email: user.email
   });
 });
 
-//delete your own account
-//only when you are logged in can u delete
-//use middleware to achieve this
-//put back auth when needed auth
+
 router.delete("/delete/:id", async (req, res) => {
   try {
     const deletedUser = await donorUser.findByIdAndDelete(req.params.id);
@@ -129,19 +126,16 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
-//put task to schedule
-//delete task from schedule
-//update task in schedule
 
-router.put("/:userId/addTasks/:id", (req, res) => {
-  Task.findById(req.params.id, (err, task) => {
+router.put("/:userId/addListing/:id", (req, res) => {
+  Listing.findById(req.params.id, (err, listing) => {
     if (err) console.log(err);
     else {
       donorUser.findByIdAndUpdate(
         req.params.userId,
         {
           $push: {
-            schedule: task.id,
+            posts: listing.id,
           },
         },
         (err, model) => {
@@ -153,15 +147,15 @@ router.put("/:userId/addTasks/:id", (req, res) => {
   });
 });
 
-router.put("/:userId/removeTask/:id", (req, res) => {
-  Task.findById(req.params.id, (err, task) => {
+router.put("/:userId/removeListing/:id", (req, res) => {
+  Listing.findById(req.params.id, (err, listing) => {
     if (err) console.log(err);
     else {
       donorUser.findByIdAndUpdate(
         req.params.userId,
         {
           $pull: {
-            schedule: task.id,
+            posts: listing.id,
           },
         },
         (err, model) => {

@@ -7,7 +7,13 @@ const donorUserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
-  }
+  },
+  posts: [
+    {
+      ref: "Listing",
+      type: mongoose.Schema.Types.ObjectId
+    }
+  ]
  
 });
 

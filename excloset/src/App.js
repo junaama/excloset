@@ -10,14 +10,16 @@ import apiUrl from "./apiConfig.js";
 import UserContext from "./Context/context";
 import Footer from './Components/Footer/Footer'
 import Donate from './Components/CreateListing/Donate'
-
+import Listings from './Components/DisplayListings/Listings'
+import ListingsContainer from './Components/DisplayListings/ListingContainer'
 function App() {
   const [user, setUser] = useState({
     token: undefined,
     user: undefined,
     role: undefined
   });
-  console.log('user: ', user.role)
+  
+  //console.log('user: ', user.role)
   useEffect(() => {
     const checkDonorLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
@@ -36,7 +38,6 @@ function App() {
         const userRes = await axios.get(`${apiUrl}/api/donoruser`, {
           headers: { "x-auth-token": token },
         });
-        console.log("ur",userRes.data)
         setUser({
           token,
           user: userRes.data,
@@ -82,6 +83,8 @@ function App() {
          <Route path="/register" component={Register} />
          <Route path="/login" component={Login} />
          <Route path="/donate" component={Donate}/>
+         <Route path="/listings" component={ListingsContainer}/>
+         {/* <Route path="/listingsctn" component={ListingsContainer}/> */}
        </Switch>
        <Footer/>
      </div>
