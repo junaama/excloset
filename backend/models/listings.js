@@ -2,10 +2,8 @@ const mongoose = require('../db/connection')
 
 const listingSchema = new mongoose.Schema({
 
-    "date": Date,
     "image": {
-        data: Buffer,
-        contentType: String
+       type: String
     },
     "description": String, 
     "age": String,

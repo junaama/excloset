@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import Layout from './Components/Layout'
 import axios from 'axios'
 import {Switch, Route} from 'react-router'
 import Nav from "./Components/Nav/Nav";
@@ -10,6 +9,7 @@ import Landing from './Components/Landing'
 import apiUrl from "./apiConfig.js";
 import UserContext from "./Context/context";
 import Footer from './Components/Footer/Footer'
+import Donate from './Components/CreateListing/Donate'
 
 function App() {
   const [user, setUser] = useState({
@@ -81,6 +81,7 @@ function App() {
          <Route exact path="/" component={Landing}/>
          <Route path="/register" component={Register} />
          <Route path="/login" component={Login} />
+         <Route path="/donate" component={Donate}/>
        </Switch>
        <Footer/>
      </div>
