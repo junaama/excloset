@@ -3,7 +3,13 @@ import Listing from './Listing'
 import UserContext from "../../Context/context";
 import axios from 'axios'
 import apiURL from '../../apiConfig'
-const userId = document.cookie.split(";")[1].split('=')[1];
+
+let userId
+if(document.cookie){
+   userId = document.cookie.split('=')[1];
+} else {
+   userId=""
+}
 
 const ListingContainer = () => {
     const { user } = useContext(UserContext);

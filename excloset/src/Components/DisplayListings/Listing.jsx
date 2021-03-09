@@ -2,8 +2,12 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import apiURL from '../../apiConfig'
 
-const userId = document.cookie.split(";")[1].split('=')[1];
-
+let userId
+if(document.cookie){
+   userId = document.cookie.split('=')[1];
+} else {
+   userId=""
+}
 const Listing = (props) => {
     console.log("pROPS: ", props)
     console.log(props.listingId)
@@ -16,8 +20,6 @@ const Listing = (props) => {
 
             try {
                 const res = await axios(`${apiURL}/api/donoruser/${userId}`)
-                
-
                 const temp = []
                 res.data.posts.map(async (item)=>{
                     const postRes = await axios(`${apiURL}/api/listings/${item}`)

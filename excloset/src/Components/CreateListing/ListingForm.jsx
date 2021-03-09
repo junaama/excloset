@@ -2,7 +2,12 @@ import React, { useState,useRef } from "react";
 import apiURL from "../../apiConfig";
 import axios from "axios";
 
-const userId = document.cookie.split(";")[1].split('=')[1];
+let userId
+if(document.cookie){
+   userId = document.cookie.split('=')[1];
+} else {
+   userId=""
+}
 
 const ListingForm = () => {
 
